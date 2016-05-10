@@ -12,7 +12,9 @@ current_y = 0.0
 previous_remaining_dist = 9
 remaining_dist = -1.0
 center_offset = 5
+ask = rospy.Publisher('vision', Distance, queue_size=10)
 pub = rospy.Publisher('/komodo_1/diff_driver/command', Twist, queue_size=10)
+arm = rospy.Publisher('arm', Distance, queue_size=10)
 
 def fix_degree(data):
 	global pub
@@ -40,7 +42,7 @@ def fix_degree(data):
 	while (cells_to_fix > 0):
 		print "Fixing loop: " + str(cells_to_fix) + " cells to fix"
 		pub.publish(twist)
-		rospy.sleep(0.1)
+		rospy.sleep(0.2)
 		cells_to_fix -= 1
 
 	pub.publish(Twist())
@@ -59,54 +61,11 @@ def update_angle(data):
 	global current_angle
 	current_angle = math.asin(data.pose.pose.orientation.z) * 2
 
-def update_pos(data):
-	global current_y
-	global current_x
-
-	current_x = data.pose.pose.position.x
-	current_y = data.pose.pose.position.y
-
-
-def frange(x, y, jump):
-	while x < y:
-		yield x
-		x+=jump
-
 def drive(data):
 	global current_angle
 	global pub
 
-	print "MOVING, Distance: " + str(data.distance) + " Degrees: " + str(data.radians)
-
-	for i in range(int(27)):
-		twist = Twist()
-		twist.linear.x = 0.1
-
-		pub.publish(twist)
-		rospy.sleep(0.1)
-
-	pub.publish(Twist())
-
-	direction = 1
-	if (data.radians < 0):
-		direction = -1
-
-	odom_angle = rospy.Subscriber('/komodo_1/diff_driver/odometry', Odometry, update_angle)
-
-	rospy.wait_for_message('/komodo_1/diff_driver/odometry', Odometry)
-
-	while direction * current_angle < direction * (data.radians - (direction * 0.002)):
-		print "Current angle: " + str(current_angle)
-		twist = Twist()
-		twist.angular.z = direction * 0.05
-		
-		pub.publish(twist)
-		rospy.sleep(0.1)
-		rospy.wait_for_message('/komodo_1/diff_driver/odometry', Odometry)
-	print
-	pub.publish(Twist())
-
-	odom_angle.unregister();
+	print "MOVING, Distance: " + str(data.distance)
 
 	laser = rospy.Subscriber('/komodo_1/scan', LaserScan, update_remaining_dist)
 	rospy.wait_for_message('/komodo_1/scan', LaserScan)
@@ -122,15 +81,41 @@ def drive(data):
 
 	pub.publish(Twist())
 
-def wait_for_distance():
-	rospy.sleep(30)
+def check_distance(data):
+	print "check_distance", data.distance
+	if data.distance == -1:
+		return
+
+	drive(data)
+
+	arm.publish(Distance())
+	rospy.signal_shutdown("Mover node finished its job.")
+
+def init():
 	rospy.init_node('mover', anonymous=True)
-	rospy.Subscriber('advance', Distance, drive)
-	rospy.spin()
+
+def search():
+	global pub
+	global ask
+	global should_drive
+	should_drive = rospy.Subscriber('advance', Distance, check_distance)
+
+	while(1):
+		ask.publish(Distance())
+		print "Waiting on advance"
+		rospy.wait_for_message('advance', Distance)
+
+		# Vision node returned -1, continue search
+		spin = Twist()
+		spin.angular.z = 0.1
+		pub.publish(spin)
+		rospy.sleep(0.1)
+		pub.publish(Twist())
 
 if __name__ == '__main__':
 	try:
-		wait_for_distance()
+		init()
+		search()
 		
 	except rospy.ROSInterruptException:
 		pub = rospy.Publisher('/komodo_1/diff_driver/command', Twist, queue_size=10)

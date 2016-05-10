@@ -82,11 +82,11 @@
     <model name='blue_cube'>
       <static>1</static>
       <link name='chassis'>
-        <pose>0 0 0.5 0 -0 0</pose>
+        <pose>0 0 0.3 0 -0 0</pose>
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>0.6 0.6 0.6</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -104,7 +104,7 @@
           <geometry>
             <mesh>
               <uri>model://blue_cube/meshes/blue_box.dae</uri>
-              <scale>1 1 1</scale>
+              <scale>0.6 0.6 0.6</scale>
             </mesh>
           </geometry>
           <material>
@@ -123,16 +123,16 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose>-1 -2 0 0 -0 0</pose>
+      <pose>-2 -1 0 0 -0 0</pose>
     </model>
     <model name='green_cube'>
       <static>1</static>
       <link name='chassis'>
-        <pose>0 0 0.5 0 -0 0</pose>
+        <pose>0 0 0.3 0 -0 0</pose>
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>0.6 0.6 0.6</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -150,7 +150,7 @@
           <geometry>
             <mesh>
               <uri>model://green_cube/meshes/simple_box.dae</uri>
-              <scale>1 1 1</scale>
+              <scale>0.6 0.6 0.6</scale>
             </mesh>
           </geometry>
           <material>
@@ -169,16 +169,16 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose>-1 -1 0 0 -0 0</pose>
+      <pose>-3 3 0 0 -0 0</pose>
     </model>
     <model name='red_cube'>
       <static>1</static>
       <link name='chassis'>
-        <pose>0 0 0.5 0 -0 0</pose>
+        <pose>0 0 0.3 0 -0 0</pose>
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1 1 1</size>
+              <size>0.6 0.6 0.6</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -196,7 +196,7 @@
           <geometry>
             <mesh>
               <uri>model://red_cube/meshes/simple_box.dae</uri>
-              <scale>1 1 1</scale>
+              <scale>0.6 0.6 0.6</scale>
             </mesh>
           </geometry>
           <material>
@@ -215,25 +215,25 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose>-1 0 0 0 -0 0</pose>
+      <pose>2 1 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>101 822000000</sim_time>
-      <real_time>102 115235170</real_time>
-      <wall_time>1462882430 180402231</wall_time>
+      <sim_time>40 412000000</sim_time>
+      <real_time>40 550973664</real_time>
+      <wall_time>1462900177 60736446</wall_time>
       <model name='blue_cube'>
-        <pose>4.17414 -5.10112 0 0 -0 0</pose>
+        <pose>-2.12243 -1.43907 0 0 -0 0</pose>
         <link name='chassis'>
-          <pose>4.17414 -5.10112 0.5 0 -0 0</pose>
+          <pose>-2.12243 -1.43907 0.3 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='green_cube'>
-        <pose>-2.62721 -0.249939 0 0 -0 0</pose>
+        <pose>-3 3 0 0 -0 0</pose>
         <link name='chassis'>
-          <pose>-2.62721 -0.249939 0.5 0 -0 0</pose>
+          <pose>-3 3 0.3 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -249,9 +249,9 @@
         </link>
       </model>
       <model name='red_cube'>
-        <pose>0.770007 3.09593 0 0 -0 0</pose>
+        <pose>2 1 0 0 -0 0</pose>
         <link name='chassis'>
-          <pose>0.770007 3.09593 0.5 0 -0 0</pose>
+          <pose>2 1 0.3 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -260,7 +260,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>13.8654 -17.6586 19.0628 7.39538e-17 0.721797 2.00817</pose>
+        <pose>5.58738 -7.89661 7.1293 3.39018e-17 0.611643 2.14019</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>
