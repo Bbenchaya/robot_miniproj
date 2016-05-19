@@ -1,12 +1,6 @@
 <launch>
-
   <include file="$(find robot_miniproj)/launch/komodo_with_elev_gazebo.launch"/>
-<<<<<<< HEAD
   <node name="vision" pkg="robot_miniproj" type="vision.py" respawn="false" output="screen" />
-=======
-
   <node name="mover" pkg="robot_miniproj" type="mover.py" respawn="false" output="screen" />
-  <!-- <node name="vision" pkg="robot_miniproj" type="depth.py" respawn="false" output="screen" />  -->
   <node name="armit" pkg="robot_miniproj" type="armit.py" respawn="false" output="screen" />
->>>>>>> 62bab3a9da817626b7d157abaf621e0d145f544f
 </launch> 
