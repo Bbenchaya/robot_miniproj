@@ -100,6 +100,7 @@ def search():
 	global should_drive
 	should_drive = rospy.Subscriber('advance', Distance, check_distance)
 
+	rospy.sleep(20)
 	while(1):
 		ask.publish(Distance())
 		print "Waiting on advance"
@@ -109,7 +110,7 @@ def search():
 		spin = Twist()
 		spin.angular.z = 0.1
 		pub.publish(spin)
-		rospy.sleep(0.1)
+		rospy.sleep(1)
 		pub.publish(Twist())
 
 if __name__ == '__main__':
