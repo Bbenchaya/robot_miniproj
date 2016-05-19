@@ -15,26 +15,27 @@ sub = None
 
 
 def callback(image_message):
-	global sub
 	bridge = CvBridge()
-	cv_image = bridge.imgmsg_to_cv2(image_message,"bgr8")
-	# Convert BGR to HSV
+	
+	try:
+		cv_image = bridge.imgmsg_to_cv2(image_message, "bgr8")
+	except CvBridgeError as e:
+		print(e)
+
 	hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
-	# define range of blue color in HSV
-	# lower mask (0-10)
+	
 	lower_red = np.array([0,50,50])
 	upper_red = np.array([10,255,255])
-	# Threshold the HSV image to get only blue colors
+
 	mask = cv2.inRange(hsv, lower_red, upper_red)
 
-	# Bitwise-AND mask and original image
 	res = cv2.bitwise_and(cv_image,cv_image, mask= mask)
-	print "here!!!!!!!!!!"
-	cv2.imshow('frame',cv_image)
-	cv2.imshow('mask',mask)
-	cv2.imshow('res',res)
-	#cv2.destroyAllWindows()
-	
+
+	cv2.imshow("Mask", mask)
+	cv2.imshow("Result", res)
+	cv2.waitKey(3)
+	rospy.sleep(10)
+
 
 def listener():
 	global sub
