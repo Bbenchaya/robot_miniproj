@@ -1,5 +1,7 @@
 <launch>
-  <include file="$(find robot_miniproj)/launch/komodo_with_elev_gazebo.launch"/>
+  <include file="$(find robot_miniproj)/launch/komodo_with_elev_gazebo.launch">
+  	<arg name="worldnum" value="$(arg worldnum)" />
+  </include>
   <node name="vision" pkg="robot_miniproj" type="vision.py" respawn="false" output="screen" />
   <node name="mover" pkg="robot_miniproj" type="mover.py" respawn="false" output="screen" />
   <node name="armit" pkg="robot_miniproj" type="armit.py" respawn="false" output="screen" />

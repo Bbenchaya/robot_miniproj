@@ -20,12 +20,12 @@ def armit(data):
     print 'Raising elevator'
     # for i in range(200):
     elevator.publish(0.35)
-    shoulder.publish(1.7)
-    base_rotation.publish(0)
-    wrist.publish(0)
+    # shoulder.publish(1.7)
+    # base_rotation.publish(0)
+    # wrist.publish(0)
     left_finger.publish(0.33)
     right_finger.publish(-0.33)
-    elbow.publish(0.4)
+    elbow.publish(0.1)
     # rospy.sleep(0.1)
 
     # print 'Moving arm to initial position'
@@ -84,7 +84,7 @@ if __name__ == '__main__':
         elbow = rospy.Publisher('/komodo_1/elbow2_controller/command', Float64, queue_size = 10)
         
         rospy.sleep(20)
-        elevator.publish(1)
+        #elevator.publish(1)
         print "Arm is now active"
         rospy.Subscriber('arm', Distance, armit)
         rospy.spin()

@@ -6,11 +6,12 @@
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
-  
+  <arg name="worldnum" default="1"/>
+
   <!-- We resume the logic in empty_world.launch -->
   <!-- <include file="$(find robot_miniproj)/worlds/world.world"> -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find robot_miniproj)/worlds/world.world" />
+    <arg name="world_name" value="$(find robot_miniproj)/worlds/world$(arg worldnum).world" />
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
     <arg name="paused" value="$(arg paused)"/>

@@ -43,9 +43,9 @@ def callback(image_message):
 	height, width = mask.shape
 
 	for i in range(height):
-		for j in range(width * 4/9, width * 5/9):
+		for j in range(width * 49/100, width * 51/100):
 			#if np.array_equal(np.array(mask[i,j]),np.array([255,255,255]))==0:
-			if mask[i,j] != 0: 
+			if mask[i,j] != 0 and mask[i,j+10]!=0 and mask[i,j-10]!=0: 
 				dist.distance = 1
 				advance.publish(dist)
 				found = 1
@@ -61,6 +61,7 @@ def listener(data):
 
 	sub = rospy.Subscriber("/komodo_1/Asus_Camera/rgb/image_raw", Image, callback)
 	rospy.wait_for_message('/komodo_1/Asus_Camera/rgb/image_raw', Image)
+	sub.unregister()
 	
 
 if __name__ == '__main__':
@@ -72,7 +73,7 @@ if __name__ == '__main__':
 		got_first_frame = False
 		rospy.init_node('vision', anonymous=True)
  		sub_advance = rospy.Subscriber('vision', Distance, listener)
- 		rospy.sleep(1)
+ 		#rospy.sleep(1)
  		rospy.spin()
 
  	except rospy.ROSInterruptException:

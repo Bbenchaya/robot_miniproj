@@ -107,11 +107,14 @@ def search():
 		rospy.wait_for_message('advance', Distance)
 
 		# Vision node returned -1, continue search
+		print "Resuming spin loop"
 		spin = Twist()
 		spin.angular.z = 0.1
 		pub.publish(spin)
-		rospy.sleep(1)
+		rospy.sleep(0.1)
 		pub.publish(Twist())
+		#rospy.sleep(1)
+
 
 if __name__ == '__main__':
 	try:
