@@ -24,21 +24,16 @@ def fix_degree(data):
 	print "FIXING DEGREE"
 	twist = Twist()
 	pub.publish(Twist())
-	# print "remaining_dist: " + str(remaining_dist) + " previous_remaining_dist: " + str(previous_remaining_dist)
 	for i in range(30):
 		if (data.ranges[360 - i]) <= previous_remaining_dist + 0.5:
-			# print "Fixing to the right"
 			twist.angular.z = -0.1
 			cells_to_fix = i
 			break
 		elif (data.ranges[360 + i]) <= previous_remaining_dist + 0.5:
-			# print "Fixing to the left"
 			twist.angular.z = 0.1
 			cells_to_fix = i
 			break
-		#print "to the right i see: " + str(data.ranges[360 - i]) + " and left: " + str(data.ranges[360 + i])
 
-	#print "Fixing - moving by" + str(twist.angular.z)
 	while (cells_to_fix > 0):
 		print "Fixing loop: " + str(cells_to_fix) + " cells to fix"
 		pub.publish(twist)
@@ -52,7 +47,6 @@ def update_remaining_dist(data):
 	global previous_remaining_dist
 	
 	remaining_dist = min(data.ranges[i] for i in range(360 - center_offset, 360 + center_offset))
-	# print "update: remaining_dist: " + str(remaining_dist) + " previous_remaining_dist: " + str(previous_remaining_dist)
 	if (remaining_dist > previous_remaining_dist + 1):
 		fix_degree(data)
 	previous_remaining_dist = remaining_dist
@@ -113,7 +107,6 @@ def search():
 		pub.publish(spin)
 		rospy.sleep(0.1)
 		pub.publish(Twist())
-		#rospy.sleep(1)
 
 
 if __name__ == '__main__':

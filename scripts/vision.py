@@ -32,19 +32,17 @@ def callback(image_message):
 
 	res = cv2.bitwise_and(cv_image,cv_image, mask= mask)
 
-	#cv2.imshow("Mask", mask)
-	#cv2.imshow("Result", res)
-	#cv2.waitKey(3)
+	# cv2.imshow("Mask", mask)
+	# cv2.imshow("cv_image", cv_image)
+	# cv2.imshow("Result", res)
+	# cv2.waitKey(3)
 	#rospy.sleep(10)
 	dist = Distance()
 	found = 0
-	#print type(mask)
-	#print image_message.data[image_message.width+1]
 	height, width = mask.shape
 
 	for i in range(height):
 		for j in range(width * 49/100, width * 51/100):
-			#if np.array_equal(np.array(mask[i,j]),np.array([255,255,255]))==0:
 			if mask[i,j] != 0 and mask[i,j+10]!=0 and mask[i,j-10]!=0: 
 				dist.distance = 1
 				advance.publish(dist)
@@ -73,7 +71,6 @@ if __name__ == '__main__':
 		got_first_frame = False
 		rospy.init_node('vision', anonymous=True)
  		sub_advance = rospy.Subscriber('vision', Distance, listener)
- 		#rospy.sleep(1)
  		rospy.spin()
 
  	except rospy.ROSInterruptException:
